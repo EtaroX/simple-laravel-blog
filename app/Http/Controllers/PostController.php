@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -12,7 +13,12 @@ class PostController extends Controller
      */
     public function index()
     {
-
+        return view('posts.index', [
+            'posts' => Post::where('user_id', '!=', Auth::user()->id)
+                ->orderByDesc('updated_at')
+                ->with('user')
+                ->paginate(20),
+        ]);
     }
 
     /**
