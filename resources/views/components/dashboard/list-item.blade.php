@@ -9,7 +9,11 @@
             <div>Zmodyfikowane: {{ $post->updated_at->diffForHumans() }}</div>
         @endif
     </div>
-    <div class="flex items-center">
+    <div class="flex items-center gap-0.5">
+        <div>
+            <a href="{{ route('posts.show', $post) }}"
+               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Pokaż</a>
+        </div>
         <div>
             <a href="{{ route('posts.edit', $post) }}"
                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edytuj</a>
