@@ -9,7 +9,7 @@
     <ul>
         @foreach ($posts as $post)
             <li class="px-7 py-1">
-                    <x-posts.components.list-item :post="$post" />
+                    <x-posts.list-item :post="$post" />
             </li>
             <hr>
         @endforeach
