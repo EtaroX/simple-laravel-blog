@@ -26,4 +26,11 @@ class PostFactory extends Factory
             'tag' => $this->faker->word(),
         ];
     }
+    public function hasLikes(): self
+    {
+        return $this->state([
+            'likes' => $this->faker->numberBetween(1, 100),
+            'dislikes' => $this->faker->numberBetween(1, 100),
+        ]);
+    }
 }
