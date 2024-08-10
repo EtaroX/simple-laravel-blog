@@ -15,6 +15,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
-
 Route::middleware('auth')->resource('posts', \App\Http\Controllers\PostController::class);
+Route::middleware('auth')->post('/posts/{postId}/like', [\App\Http\Controllers\PostController::class, 'like'])->name('posts.like');
+Route::middleware('auth')->post('/posts/{postId}/dislike', [\App\Http\Controllers\PostController::class, 'dislike'])->name('posts.dislike');
+
+require __DIR__.'/auth.php';
