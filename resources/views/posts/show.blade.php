@@ -9,7 +9,11 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                     {{ $post->title }}
                 </h2>
-                <h3>{{$post->user->name}}</h3>
+                @if(Auth::user()->id !== $post->user_id)
+                    <h3>{{$post->user->name}}</h3>
+                @else
+                    <h3>Tag: {{$post->tag}}</h3>
+                @endif
             </div>
             @if(Auth::user()->id == $post->user_id)
                 <x-like-dislike :post="$post"/>
