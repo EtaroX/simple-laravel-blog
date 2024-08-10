@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 class PostController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -75,6 +76,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $this->authorize('delete', $post);
+
+        $post->delete();
+
+        return redirect()->route('dashboard');
     }
 }
