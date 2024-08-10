@@ -21,6 +21,13 @@ class PostController extends Controller
         ]);
     }
 
+    public function dashboard()
+    {
+        return view('dashboard', [
+            'posts' => Auth::user()->posts()->orderByDesc('updated_at')->paginate(20),
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
