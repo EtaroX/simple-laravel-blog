@@ -17,19 +17,16 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $user = User::factory()->create([
-            'name' => 'Test User',
+            'name' => 'Loggable user',
             'email' => 'test@example.com',
             'password' => Hash::make('password'),
         ]);
 
         Post::factory()->count(5)->for($user)->create();
 
-        $user2 = User::factory()->create([
-            'name' => 'Test User 2',
-            'email' => 'test2@example.com',
-            'password' => Hash::make('password'),
-        ]);
-
-        Post::factory()->count(2)->for($user2)->create();
+        for ($i = 0; $i < 5; $i++) {
+            $user = User::factory()->create();
+            Post::factory()->count(5)->for($user)->create();
+        }
     }
 }
