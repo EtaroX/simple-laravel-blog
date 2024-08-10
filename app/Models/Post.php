@@ -11,6 +11,8 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title', 'body', 'user_id', 'tag', 'photo'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -20,4 +22,6 @@ class Post extends Model
     {
         return Attribute::get(fn () => str($this->body)->markdown());
     }
+
+
 }

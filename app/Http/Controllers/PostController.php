@@ -60,7 +60,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('posts.edit', [
+            'post' => $post->load('user'),
+        ]);
     }
 
     /**
@@ -68,7 +70,16 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $this->authorize('update', $post);
+
+        $post->update($request->validate([
+            'title' => 'required|string|max:255',
+            'body' => 'required|string',
+            'tag' => 'nullable|string|max:255',
+            'photo' => 'nullable|image',
+        ]));
+
+        return redirect()->route('posts.show', $post);
     }
 
     /**
