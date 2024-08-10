@@ -12,8 +12,18 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->query('q')) {
+            return view('posts.index', [
+                'posts' => Post::where('title', 'like', '%' . $request->query('search') . '%')
+                    ->orWhere('body', 'like', '%' . $request->query('search') . '%')
+                    ->orWhere('tag', 'like', '%' . $request->query('search') . '%')
+                    ->orderByDesc('updated_at')
+                    ->with('user')
+                    ->paginate(20),
+            ]);
+        }
         return view('posts.index', [
             'posts' => Post::where('user_id', '!=', Auth::user()->id)
                 ->orderByDesc('updated_at')

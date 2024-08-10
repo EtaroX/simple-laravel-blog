@@ -9,11 +9,20 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                     {{ $post->title }}
                 </h2>
+                <h3>
                 @if(Auth::user()->id !== $post->user_id)
-                    <h3>{{$post->user->name}}</h3>
+                    Autor: {{$post->user->name}},
                 @else
-                    <h3>Tag: {{$post->tag}}</h3>
+                    Autor: Ty :D,
                 @endif
+                    Tag: {{$post->tag}}
+                </h3>
+                <h3>
+                    Czas utworzenia: {{$post->created_at->diffForHumans()}}
+                    @if ($post->created_at != $post->updated_at)
+                        | Ostatnia aktualizacja: {{$post->updated_at->diffForHumans()}}
+                    @endif
+                </h3>
             </div>
             @if(Auth::user()->id == $post->user_id)
                 <x-like-dislike :post="$post"/>
