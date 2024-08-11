@@ -14,7 +14,7 @@
     <div class="pt-5 max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900">
-                <form action="{{ route('posts.store') }}" id="formEdit" method="POST">
+                <form action="{{ route('posts.store') }}" id="formEdit" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-4">
                         <label for="title" class="block text-sm font-medium text-gray-700">Tytuł</label>
@@ -23,6 +23,10 @@
                     <div class="mb-4">
                         <label for="tag" class="block text-sm font-medium text-gray-700">Tag</label>
                         <input type="text" name="tag" id="tag" value="" class="mt-1 p-2 w-full border border-gray-300 rounded-md">
+                    </div>
+                    <div class="mb-4">
+                        <label for="photo" class="block text-sm font-medium text-gray-700">Zdjęcie (Najlepiej w proporcjach 5/1) </label>
+                        <input type="file" accept="image/*" name="photo" id="photo" value="" class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                     </div>
                     <div class="mb-4">
                         <label for="editor" class="block text-sm font-medium text-gray-700">Treść</label>

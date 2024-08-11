@@ -6,6 +6,8 @@ use App\Models\Post;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+
 class PostController extends Controller
 {
     use AuthorizesRequests;
@@ -57,11 +59,15 @@ class PostController extends Controller
             'body' => 'required|string',
             'tag' => 'required|string|max:255',
         ]);
-//        'photo' => $request->file('photo')->store('photos')
-        $post = Auth::user()->posts()->create([...$data, "user_id" => $request->user()->id ]);
+        if ($request->hasFile('photo')) {
+            $request->validate([
+                'photo' => 'image|max:2048',
+            ]);
+            $data['photo'] = $request->file('photo')->storePublicly('public');
+        }
+        $post = Auth::user()->posts()->create([...$data, "user_id" => $request->user()->id]);
 
         return redirect()->route('posts.show', $post);
-
     }
 
     /**
@@ -91,13 +97,21 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
 
-        $post->update($request->validate([
+        $data = $request->validate([
             'title' => 'required|string|max:255',
             'body' => 'required|string',
-            'tag' => 'nullable|string|max:255',
-            'photo' => 'nullable|image',
-        ]));
-
+            'tag' => 'required|string|max:255',
+        ]);
+        if ($request->hasFile('photo')) {
+            $request->validate([
+                'photo' => 'image|max:2048',
+            ]);
+            if ($post->photo) {
+                File::delete($post->photo);
+            }
+            $data['photo'] = $request->file('photo')->storePublicly('public');
+        }
+        $post->update($data);
         return redirect()->route('posts.show', $post);
     }
 
@@ -114,18 +128,19 @@ class PostController extends Controller
     }
 
 
-    public function like(Request $request, string $postId){
-        if(!$postId){
+    public function like(Request $request, string $postId)
+    {
+        if (!$postId) {
             return response()->json(['message' => 'post_id is required'], 400);
         }
         $post = Post::find($postId);
-        if(!$post){
+        if (!$post) {
             return response()->json(['message' => 'post not found'], 404);
         }
-        if($post->user_id == $request->user()->id){
+        if ($post->user_id == $request->user()->id) {
             return response()->json(['message' => 'You cannot like your own post'], 403);
         }
-        if ($request->user()->last_like_at && $request->user()->last_like_at->diffInHours() < 1){
+        if ($request->user()->last_like_at && $request->user()->last_like_at->diffInHours() < 1) {
             return response()->json(['message' => 'You can only like/dislike a post once every hour'], 400);
         }
         $post->incrementLikes();
@@ -133,18 +148,20 @@ class PostController extends Controller
         $request->user()->save();
         return response()->json(['message' => 'Post liked successfully'], 200);
     }
-    public function dislike(Request $request, string $postId){
-        if(!$postId){
+
+    public function dislike(Request $request, string $postId)
+    {
+        if (!$postId) {
             return response()->json(['message' => 'post_id is required'], 400);
         }
         $post = Post::find($postId);
-        if(!$post){
+        if (!$post) {
             return response()->json(['message' => 'post not found'], 404);
         }
-        if($post->user_id == $request->user()->id){
+        if ($post->user_id == $request->user()->id) {
             return response()->json(['message' => 'You cannot dislike your own post'], 403);
         }
-        if ($request->user()->last_like_at && $request->user()->last_like_at->diffInHours() < 1){
+        if ($request->user()->last_like_at && $request->user()->last_like_at->diffInHours() < 1) {
             return response()->json(['message' => 'You can only like/dislike a post once every hour'], 400);
         }
         $post->incrementDislikes();

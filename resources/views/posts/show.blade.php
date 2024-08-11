@@ -10,11 +10,11 @@
                     {{ $post->title }}
                 </h2>
                 <h3>
-                @if(Auth::user()->id !== $post->user_id)
-                    Autor: {{$post->user->name}},
-                @else
-                    Autor: Ty :D,
-                @endif
+                    @if(Auth::user()->id !== $post->user_id)
+                        Autor: {{$post->user->name}},
+                    @else
+                        Autor: Ty :D,
+                    @endif
                     Tag: {{$post->tag}}
                 </h3>
                 <h3>
@@ -63,6 +63,20 @@
         </div>
 
     </x-slot>
+
+    @if($post->photo)
+        <div class="pt-5 max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 flex justify-center">
+                    @if(str_starts_with($post->photo, 'http'))
+                        <img src="{{ $post->photo }}" alt="Post image" class="max-h-64">
+                    @else
+                        <img src="{{ Storage::url($post->photo) }}" alt="Post image" class="max-h-64">
+                    @endif
+                </div>
+            </div>
+        </div>
+    @endif
 
     <div class="pt-5 max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

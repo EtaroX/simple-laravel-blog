@@ -28,6 +28,11 @@
                                class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                     </div>
                     <div class="mb-4">
+                        <label for="photo" class="block text-sm font-medium text-gray-700">Podmień zdjęcie na nowe (Najlepiej w proporcjach 5/1) </label>
+                        <input type="file" accept="image/*" name="photo" id="photo" value="" class="mt-1 p-2 w-full border border-gray-300 rounded-md">
+                    </div>
+
+                    <div class="mb-4">
                         <label for="editor" class="block text-sm font-medium text-gray-700">Treść</label>
                         <input type="hidden" name="body" id="content" value="{{$post->body}}">
                         <div id="editor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></div>
