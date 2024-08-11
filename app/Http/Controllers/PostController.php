@@ -127,6 +127,17 @@ class PostController extends Controller
         return redirect()->route('dashboard');
     }
 
+    public function getLikes(string $postId)
+    {
+        if (!$postId) {
+            return response()->json(['message' => 'post_id is required'], 400);
+        }
+        $post = Post::find($postId);
+        if (!$post) {
+            return response()->json(['message' => 'post not found'], 404);
+        }
+        return response()->json(['likes' => $post->likes], 200);
+    }
 
     public function like(Request $request, string $postId)
     {
@@ -149,6 +160,17 @@ class PostController extends Controller
         return response()->json(['message' => 'Post liked successfully'], 200);
     }
 
+    public function getDislikes(string $postId)
+    {
+        if (!$postId) {
+            return response()->json(['message' => 'post_id is required'], 400);
+        }
+        $post = Post::find($postId);
+        if (!$post) {
+            return response()->json(['message' => 'post not found'], 404);
+        }
+        return response()->json(['dislikes' => $post->dislikes], 200);
+    }
     public function dislike(Request $request, string $postId)
     {
         if (!$postId) {

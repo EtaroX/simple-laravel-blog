@@ -19,7 +19,9 @@ Route::get('/dashboard', [PostController::class, 'dashboard'])->name('dashboard'
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('posts', PostController::class);
+    Route::get('/posts/{postId}/like', [PostController::class, 'getLikes'])->whereNumber('postId')->name('posts.getLikes');
     Route::post('/posts/{postId}/like', [PostController::class, 'like'])->whereNumber('postId')->name('posts.like');
+    Route::get('/posts/{postId}/dislike', [PostController::class, 'getDislikes'])->whereNumber('postId')->name('posts.getDislikes');
     Route::post('/posts/{postId}/dislike', [PostController::class, 'dislike'])->whereNumber('postId')->name('posts.dislike');
 
 });
