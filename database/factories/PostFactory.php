@@ -17,12 +17,13 @@ class PostFactory extends Factory
     public function definition(): array
     {
         $this->faker->addProvider(new \DavidBadura\FakerMarkdownGenerator\FakerProvider($this->faker));
+        $this->faker->addProvider(new \Mmo\Faker\PicsumProvider($this->faker));
 
         return [
             'user_id' => \App\Models\User::factory(),
             'title' => $this->faker->sentence(),
             'body' => $this->faker->markdown(),
-            'photo' => $this->faker->imageUrl(),
+            'photo' => $this->faker->picsumUrl(500, 100),
             'tag' => $this->faker->word(),
         ];
     }
