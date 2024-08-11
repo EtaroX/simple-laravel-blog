@@ -5,6 +5,7 @@ if (document.getElementById('postId')) {
     like.addEventListener('click', () => {
         axios.post(`/posts/${postId}/like`, {}).then(response => {
             alert(response.data.message);
+            document.getElementById('likes_count').innerText = response.data.count
         }).catch(error => {
             alert(error.response.data.message);
         });
@@ -12,6 +13,7 @@ if (document.getElementById('postId')) {
     dislike.addEventListener('click', () => {
         axios.post(`/posts/${postId}/dislike`, {}).then(response => {
             alert(response.data.message);
+            document.getElementById('dislikes_count').innerText = response.data.count
         }).catch(error => {
             alert(error.response.data.message);
         });

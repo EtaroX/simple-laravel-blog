@@ -157,7 +157,7 @@ class PostController extends Controller
         $post->incrementLikes();
         $request->user()->last_like_at = now();
         $request->user()->save();
-        return response()->json(['message' => 'Post liked successfully'], 200);
+        return response()->json(['message' => 'Post liked successfully','count' => $post->likes], 200);
     }
 
     public function getDislikes(string $postId)
@@ -189,7 +189,7 @@ class PostController extends Controller
         $post->incrementDislikes();
         $request->user()->last_like_at = now();
         $request->user()->save();
-        return response()->json(['message' => 'Post disliked successfully'], 200);
+        return response()->json(['message' => 'Post disliked successfully','count' => $post->dislikes], 200);
 
     }
 }

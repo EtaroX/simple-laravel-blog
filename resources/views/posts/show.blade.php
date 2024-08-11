@@ -48,13 +48,13 @@
                         <div>
                             <button id="like"
                                     class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                                <i class="fa-solid fa-thumbs-up"></i> {{ $post->likes }}
+                                <i class="fa-solid fa-thumbs-up"></i> <span id="likes_count">{{ $post->likes }}</span>
                             </button>
                         </div>
                         <div>
                             <button id="dislike"
                                     class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                <i class="fa-solid fa-thumbs-down"></i> {{ $post->dislikes }}
+                                <i class="fa-solid fa-thumbs-down"></i> <span id="dislikes_count">{{ $post->dislikes }}</span>
                             </button>
                         </div>
                     </div>
