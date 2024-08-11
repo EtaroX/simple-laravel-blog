@@ -24,7 +24,7 @@
                     </div>
                     <div class="mb-4">
                         <label for="tag" class="block text-sm font-medium text-gray-700">Tag</label>
-                        <input type="text" name="tag" id="tag" value=""
+                        <input type="text" name="tag" id="tag" value="{{ $post->tag }}"
                                class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                     </div>
                     <div class="mb-4">
