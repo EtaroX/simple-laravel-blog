@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\PostController;
 
 Route::get('/', function () {
+    if (auth()->check()) {
+        return redirect()->route('posts.index');
+    }
     return view('welcome');
 });
 
